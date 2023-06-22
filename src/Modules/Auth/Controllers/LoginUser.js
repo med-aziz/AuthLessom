@@ -1,6 +1,10 @@
 const userModel = require("../../../Data/Models/User.Model");
 const bcrypt = require("bcryptjs");
-const createJwtAccessToken = require("../Utils/Tokens");
+const {
+	createJwtAccessToken,
+	createJwtRefreshToken,
+} = require("../Utils/Tokens");
+const { REFRESH_COOKIE_NAME } = require("../../../../config");
 const loginUser = async (req, res, next) => {
 	try {
 		const foundUser = await userModel.findOne({
@@ -13,7 +17,9 @@ const loginUser = async (req, res, next) => {
 			);
 			if (isPasswordCorrect) {
 				delete foundUser._doc.password;
-				const accessToken = await createJwtAccessToken(foundUser);
+				const accessToken = createJwtAccessToken(foundUser);
+				const refreshToken = createJwtRefreshToken(foundUser);
+				res.cookie(REFRESH_COOKIE_NAME, refreshToken);
 				return res.status(200).send({
 					message: "Logged in successfully",
 					payload: {

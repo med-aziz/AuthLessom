@@ -11,6 +11,12 @@
 // -> request -> protected -> authMiddlware -> decode jwt token -> get user id -> controller -> response
 // sessions or tokens are used to keep track of who sent the request
 
-headers: {
-	authorization: "Bearer eyfgrlgotrgkortgrerth.fewigerigireogrweigofiweoigwe.gregergiqwefoewoifg";
-}
+const arr = [1, 2, 3, 4, 5];
+
+const squaredArray = arr.map((item) => item * item).join(",");
+console.log(squaredArray);
+const squaredForEach = [];
+arr.forEach((item) => {
+	squaredForEach.push(item * item);
+});
+console.log(squaredForEach);
